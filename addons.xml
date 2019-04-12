@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.netflix" name="Netflix" version="0.14.0~beta23" provider-name="libdev + jojo + asciidisco + caphm + castagnait">
+<addon id="plugin.video.netflix" name="Netflix" version="0.14.0~beta24" provider-name="libdev + jojo + asciidisco + caphm + castagnait">
   <requires>
     <import addon="xbmc.python" version="2.26.0"/>
     <import addon="script.module.requests" version="2.12.4"/>
@@ -20,6 +20,8 @@
     <summary lang="en_GB">Netflix</summary>
     <description lang="en_GB">Netflix VOD Services Addon</description>
     <disclaimer lang="en_GB">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+    <description lang="it_IT">Netflix Addon servizi VOD</description>
+    <disclaimer lang="it_IT">Alcune parti di questo addon potrebbero non essere legali nel proprio paese di residenza - si prega di verificare le leggi locali prima dell'installazione.</disclaimer>
     <assets>
       <icon>resources/icon.png</icon>
       <fanart>resources/fanart.jpg</fanart>
@@ -31,10 +33,21 @@
     <platform>all</platform>
     <license>MIT</license>
     <website>https://www.netflix.com</website>
-    <email>public at asciidisco dot com</email>
-    <forum>https://www.kodinerds.net/index.php/Thread/55612-PreRelease-Plugin-Netflix-Inputstream/</forum>
+    <email></email>
+    <forum>https://forum.kodi.tv/showthread.php?tid=329767</forum>
     <source>https://github.com/CastagnaIT/plugin.video.netflix</source>
     <news>
+v0.14.0 beta24 (2019-04-12)
+- Added pagination support of results
+- Added choice of type sorting of results (in settings, views)
+- Added workaround for locale+country problem es. spain-spain pt-breton etc.
+- Updated polish translation
+- Fixed "check your credentials" after login
+- Fixed unicode decode errors with library
+- Fixed loss of tv series and films exported
+- Fixed wrong results with search using special characters
+- Other fixes
+
 v0.14.0 beta23 (2019-03-17)
 - Fixed InvalidVideoId error when try to access a profile
 - Fixed UnicodeEncodeError when play a video with some particular languages
@@ -156,9 +169,9 @@ v0.12.9 (2018-04-16)
 <addon id="repository.castagnait" name="CastagnaIT Repository" version="1.0.0" provider-name="castagnait">
 	<extension point="xbmc.addon.repository" name="CastagnaIT Repository">
 		<dir>
-			<info>https://raw.githubusercontent.com/CastangnaIT/repository.castagnait/master/addons.xml</info>
-			<checksum>https://raw.githubusercontent.com/CastangnaIT/repository.castagnait/master/addons.xml.md5</checksum>
-			<datadir zip="true">https://github.com/CastangnaIT/repository.castagnait/raw/master/zip</datadir>
+			<info>https://github.com/CastagnaIT/repository.castagnait/raw/master/addons.xml</info>
+			<checksum>https://github.com/CastagnaIT/repository.castagnait/raw/master/addons.xml.md5</checksum>
+			<datadir zip="true">https://github.com/CastagnaIT/repository.castagnait/raw/master/zip</datadir>
 		</dir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
