@@ -1,6 +1,11 @@
-generator.py
-plugin.video.netflix/
-!zip/plugin.video.netflix/
-*.xcf
-*~
-Thumbs.db
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+packages/
+temp/
+
+# PyCharm
+.idea
