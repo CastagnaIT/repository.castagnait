@@ -1,5 +1,91 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
+  <addon id="plugin.video.netflix" name="Netflix" version="0.16.2" provider-name="libdev + jojo + asciidisco + caphm + castagnait">
+    <requires>
+      <import addon="xbmc.python" version="2.26.0"/>
+      <import addon="script.module.addon.signals" version="0.0.3"/>
+      <import addon="script.module.future" version="0.17.1"/>
+      <import addon="script.module.inputstreamhelper" version="0.3.3"/>
+      <import addon="script.module.pycryptodome" version="3.4.3"/>
+      <import addon="script.module.requests" version="2.12.4"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+      <provides>video</provides>
+    </extension>
+    <extension point="xbmc.service" library="service.py"/>
+    <extension point="xbmc.python.module" library="modules/mysql-connector-python"/>
+    <extension point="xbmc.addon.metadata">
+      <reuselanguageinvoker>true</reuselanguageinvoker>
+      <summary lang="de_DE">Netflix</summary>
+      <description lang="de_DE">Addon für Netflix VOD Services</description>
+      <disclaimer lang="de_DE">Möglicherweise sind einge Teile dieses Addons in Ihrem Land illegal, Sie sollten dies unbedingt vor der Installation überprüfen.</disclaimer>
+      <summary lang="en_GB">Netflix</summary>
+      <description lang="en_GB">Netflix VOD Services Addon</description>
+      <disclaimer lang="en_GB">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+      <summary lang="nl_NL">Netflix</summary>
+      <description lang="nl_NL">Bekijk Netflix films en tvprogramma's in Kodi.</description>
+      <disclaimer lang="nl_NL">Sommige delen van deze add-on zijn mogelijk onwettig in jouw land - raadpleeg de lokale wetgeving alvorens deze add-on te installeren.</disclaimer>
+      <summary lang="ja_JP">Netflix</summary>
+      <description lang="ja_JP">Netflix VOD サービスアドオン</description>
+      <disclaimer lang="ja_JP">一部の国では、このアドオンが不法でありますので、設置する前に必ず関連法律を確認してください</disclaimer>
+      <summary lang="ko_KR">Netflix</summary>
+      <description lang="ko_KR">Netflix VOD 서비스애드온</description>
+      <disclaimer lang="ko_KR">일부 국가에서는 이 애드온의 일부가 불법일 수도 있으니, 설치하기전 관련 법을 확인하기 바랍니다.</disclaimer>
+      <description lang="it_IT">Netflix Addon servizi VOD</description>
+      <disclaimer lang="it_IT">Alcune parti di questo addon potrebbero non essere legali nel proprio paese di residenza - si prega di verificare le leggi locali prima dell'installazione.</disclaimer>
+      <summary lang="hu_HU">Netflix</summary>
+      <description lang="hu_HU">Netflix VOD kiegészítő a Kodihoz</description>
+      <disclaimer lang="hu_HU">Előfordulhat, hogy a kiegészítő néhány része nem törvényes az Ön országában - telepítés előtt tájékozódjon a helyi törvényekről.</disclaimer>
+      <assets>
+        <icon>resources/media/icon.png</icon>
+        <fanart>resources/media/fanart.jpg</fanart>
+        <screenshot>resources/media/screenshot-01.jpg</screenshot>
+        <screenshot>resources/media/screenshot-02.jpg</screenshot>
+        <screenshot>resources/media/screenshot-03.jpg</screenshot>
+        <screenshot>resources/media/screenshot-04.jpg</screenshot>
+        <screenshot>resources/media/screenshot-05.jpg</screenshot>
+      </assets>
+      <language>en de es he hr hu it ja ko nl pl pt sk sv</language>
+      <platform>all</platform>
+      <license>MIT</license>
+      <website>https://www.netflix.com</website>
+      <email></email>
+      <forum>https://forum.kodi.tv/showthread.php?tid=329767</forum>
+      <source>https://github.com/CastagnaIT/plugin.video.netflix</source>
+      <news>
+  v0.16.2 (2020-01-07)
+  -Improved add-on startup
+  -Improved loading of profiles list
+  -Added in expert setting a choice to speed up service or addon startup
+  -Fixed an issue that causing addon misbehaviour using multiple Kodi profiles
+  -Fixed an issue that causing addon breakage with sqlite connections
+  -Fixed some python 3 issues on Android
+  -Handled cases of metadata not available
+  -Permanently removed sharing Kodi videos settings between profiles
+  -Updated de, es, it translations
+  -Minor improvements
+  
+  v0.16.1 (2019-12-14)
+  -Allowed to export individual seasons to the library (manual mode)
+  -Dolby atmos audio streams are now specified (Kodi 19)
+  -Added workaround to fix skin widgets
+  -Handled subtitle properties for next version of InputStream Adaptive
+  -Introduced accurate handling of subtitles (Kodi 19)
+  -Improved handling of subtitles (Kodi 18)
+  -Improved return to main page from search dialog
+  -Improved cancel login dialog after the logout
+  -Improved timeout on IPC over HTTP
+  -Fixed an issue that showed the wrong label while browsing movies
+  -Fixed ParentalControl/Rating GUI on custom skins
+  -Fixed an issue that cause unicodedecode error on some android devices
+  -Fixed an issue that can cause unicodedecode error in user/password
+  -Added japanese language
+  -Updated kr, hu, pt_br, fr
+  -Many improvements to the code
+      </news>
+    </extension>
+  </addon>
+
   <addon id="plugin.video.netflix" name="Netflix" version="0.16.1" provider-name="libdev + jojo + asciidisco + caphm + castagnait">
     <requires>
       <import addon="xbmc.python" version="2.26.0"/>
@@ -84,81 +170,6 @@
   -New Hungarian language
   -Updated de, hr, it, pl, pt_br translations
   -Other minor improvements/fixes
-      </news>
-    </extension>
-  </addon>
-
-  <addon id="plugin.video.netflix" name="Netflix" version="0.16.0" provider-name="libdev + jojo + asciidisco + caphm + castagnait">
-    <requires>
-      <import addon="xbmc.python" version="2.26.0"/>
-      <import addon="script.module.addon.signals" version="0.0.3"/>
-      <import addon="script.module.future" version="0.17.1"/>
-      <import addon="script.module.inputstreamhelper" version="0.3.3"/>
-      <import addon="script.module.pycryptodome" version="3.4.3"/>
-      <import addon="script.module.requests" version="2.12.4"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
-      <provides>video</provides>
-    </extension>
-    <extension point="xbmc.service" library="service.py"/>
-    <extension point="xbmc.python.module" library="modules/mysql-connector-python"/>
-    <extension point="xbmc.addon.metadata">
-      <reuselanguageinvoker>true</reuselanguageinvoker>
-      <summary lang="de_DE">Netflix</summary>
-      <description lang="de_DE">Addon für Netflix VOD Services</description>
-      <disclaimer lang="de_DE">Möglicherweise sind einge Teile dieses Addons in Ihrem Land illegal, Sie sollten dies unbedingt vor der Installation überprüfen.</disclaimer>
-      <summary lang="en_GB">Netflix</summary>
-      <description lang="en_GB">Netflix VOD Services Addon</description>
-      <disclaimer lang="en_GB">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-      <summary lang="nl_NL">Netflix</summary>
-      <description lang="nl_NL">Bekijk Netflix films en tvprogramma's in Kodi.</description>
-      <disclaimer lang="nl_NL">Sommige delen van deze add-on zijn mogelijk onwettig in jouw land - raadpleeg de lokale wetgeving alvorens deze add-on te installeren.</disclaimer>
-      <description lang="it_IT">Netflix Addon servizi VOD</description>
-      <disclaimer lang="it_IT">Alcune parti di questo addon potrebbero non essere legali nel proprio paese di residenza - si prega di verificare le leggi locali prima dell'installazione.</disclaimer>
-      <summary lang="hu_HU">Netflix</summary>
-      <description lang="hu_HU">Netflix VOD kiegészítő a Kodihoz</description>
-      <disclaimer lang="hu_HU">Előfordulhat, hogy a kiegészítő néhány része nem törvényes az Ön országában - telepítés előtt tájékozódjon a helyi törvényekről.</disclaimer>
-      <assets>
-        <icon>resources/media/icon.png</icon>
-        <fanart>resources/media/fanart.jpg</fanart>
-        <screenshot>resources/media/screenshot-01.jpg</screenshot>
-        <screenshot>resources/media/screenshot-02.jpg</screenshot>
-        <screenshot>resources/media/screenshot-03.jpg</screenshot>
-        <screenshot>resources/media/screenshot-04.jpg</screenshot>
-        <screenshot>resources/media/screenshot-05.jpg</screenshot>
-      </assets>
-      <language>en de es he hr hu it nl pl pt sk sv</language>
-      <platform>all</platform>
-      <license>MIT</license>
-      <website>https://www.netflix.com</website>
-      <email></email>
-      <forum>https://forum.kodi.tv/showthread.php?tid=329767</forum>
-      <source>https://github.com/CastagnaIT/plugin.video.netflix</source>
-      <news>
-  v0.16.0 (2019-11-29)
-  -Added new parental control settings
-  -Added new thumb rating to movies/tv shows
-  -Started migrating to watched status marks by profile
-  -Optimized startup code
-  -Better handled no internet connection
-  -Fixed an issue that breaks the service when there is no internet connection
-  -Fixed an issue in some specific cases request at startup credentials even if already saved
-  -Fixed an issue did not show any error to the user when the loading of profiles fails
-  -Fixed an issue that did not allow the display of the skip button in the Kodi library
-  -New Hungarian language
-  -Updated de, hr, it, pl, pt_br translations
-  -Other minor improvements/fixes
-  
-  v0.15.11 (2019-11-20)
-  -Fixed a critical error on auto-update
-  -Fixed some error on py3
-  -Fix to handle dolby vision on Kodi 19
-  -Updated fr_fr, nl_nl translations
-  -Minor fixes
-  
-  v0.15.10 (2019-11-17)
-  -Fixed error in exporting to Kodi library due to wrong settings name
-  -Updated de_de, pt_br translations
       </news>
     </extension>
   </addon>
