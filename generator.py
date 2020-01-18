@@ -304,6 +304,6 @@ class GeneratorZIP:
 
 if __name__ == "__main__":
     print("Trying to generate addons.xml and addons.md5")
-    GeneratorXML(num_of_previous_ver=1)
+    GeneratorXML(num_of_previous_ver=2)
     print("\r\nTrying to generate zip for each add-on")
     GeneratorZIP().generate_zip_files(generate_html_indexes=True, delete_py_compiled_files=False)
