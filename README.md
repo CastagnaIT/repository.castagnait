@@ -1,6 +1,6 @@
-# CastagnaIT Repository for Kodi 18.x (LEIA) add-ons
+# CastagnaIT Repository for Kodi 19.x (MATRIX) add-ons
 
-[Repository installation file [repository.castagnait-1.0.1.zip]](https://github.com/castagnait/repository.castagnait/raw/master/repository.castagnait-1.0.1.zip)
+[Repository installation file [repository.castagnait-1.0.0.zip]](https://github.com/castagnait/repository.castagnait/raw/matrix/repository.castagnait-1.0.0.zip)
 
 Installation instructions are in the Wiki contained in the add-on repository.
 
