@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="repository.castagnait" name="CastagnaIT Repository" version="1.0.0" provider-name="castagnait">
+<addon id="repository.castagnait" name="CastagnaIT Repository for Kodi 18.x (LEIA)" version="1.0.1" provider-name="castagnait">
 	<extension point="xbmc.addon.repository" name="CastagnaIT Repository">
 		<dir>
 			<info>https://github.com/CastagnaIT/repository.castagnait/raw/master/addons.xml</info>
@@ -8,8 +8,8 @@
 		</dir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>CastagnaIT Repository</summary>
-		<description>Castagna IT repository for addons</description>
+		<summary>CastagnaIT Repository for Kodi 18.x (LEIA)</summary>
+		<description>Castagna IT repository for Kodi 18.x add-ons</description>
 		<platform>all</platform>
 		<assets>
 			<icon>icon.jpg</icon>
