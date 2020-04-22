@@ -195,11 +195,19 @@ class GeneratorZIP:
                 folder_items += [item]
         return folder_items
 
+    def remove_ver_suffix(self, version):
+        """Remove the codename suffix from version value"""
+        import re
+        pattern = re.compile(r'\+\w+\.\d$')  # Example: +matrix.1
+        return re.sub(pattern, '', version)
+
     def _file_compare_version(self, item1, item2):
-        # This file version compare accept this file name format: some_name-0.15.11.zip
+        # This file version compare accept this file name formats:
+        # some_name-0.15.11.zip
+        # some_name-0.15.11+matrix.1.zip
         if '-' in item1 and '-' in item2:
-            version1 = item1.split('-')[1][0:-4]
-            version2 = item2.split('-')[1][0:-4]
+            version1 = self.remove_ver_suffix(item1.split('-')[1][0:-4])
+            version2 = self.remove_ver_suffix(item2.split('-')[1][0:-4])
             if list(map(int, version1.split('.'))) < list(map(int, version2.split('.'))):
                 return -1
             else:
