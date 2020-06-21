@@ -1,5 +1,87 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
+  <addon id="plugin.video.netflix" name="Netflix" version="1.5.0" provider-name="libdev + jojo + asciidisco + caphm + castagnait">
+    <requires>
+      <import addon="xbmc.python" version="2.26.0"/>
+      <import addon="script.module.addon.signals" version="0.0.3"/>
+      <import addon="script.module.future" version="0.17.1"/>
+      <import addon="script.module.inputstreamhelper" version="0.3.3"/>
+      <import addon="script.module.pycryptodome" version="3.4.3"/>
+      <import addon="script.module.requests" version="2.12.4"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+      <provides>video</provides>
+    </extension>
+    <extension point="xbmc.service" library="service.py"/>
+    <extension point="xbmc.python.module" library="modules/mysql-connector-python"/>
+    <extension point="xbmc.addon.metadata">
+      <reuselanguageinvoker>true</reuselanguageinvoker>
+      <summary lang="cs_CZ">Netflix</summary>
+      <description lang="cs_CZ">Plugin pro sledování filmů, seriálů online z Netflixu</description>
+      <disclaimer lang="cs_CZ">Některé části tohoto doplňku nemusí být ve vaší zemi pobytu legální - před instalací dbejte na vaše zákony.</disclaimer>
+      <summary lang="de_DE">Netflix</summary>
+      <description lang="de_DE">Addon für Netflix VOD Services</description>
+      <disclaimer lang="de_DE">Möglicherweise sind einge Teile dieses Addons in Ihrem Land illegal, Sie sollten dies unbedingt vor der Installation überprüfen.</disclaimer>
+      <summary lang="en_GB">Netflix</summary>
+      <description lang="en_GB">Netflix VOD Services Add-on</description>
+      <disclaimer lang="en_GB">Some parts of this add-on may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+      <summary lang="el_GR">Νέτφλιξ</summary>
+      <description lang="el_GR">Πρόσθετο υπηρεσιών κατά παραγγελία του Νέτφλιξ</description>
+      <disclaimer lang="el_GR">Ορισμένα μέρη αυτού του προσθέτου μπορεί να μην είναι νόμιμα στην χώρα που κατοικείτε - παρακαλώ ελέγξτε τους τοπικούς νόμους πριν την εγκατάσταση.</disclaimer>
+      <summary lang="nl_NL">Netflix</summary>
+      <description lang="nl_NL">Bekijk Netflix films en tvprogramma's in Kodi.</description>
+      <disclaimer lang="nl_NL">Sommige delen van deze add-on zijn mogelijk onwettig in jouw land - raadpleeg de lokale wetgeving alvorens deze add-on te installeren.</disclaimer>
+      <summary lang="ja_JP">Netflix</summary>
+      <description lang="ja_JP">Netflix VOD サービスアドオン</description>
+      <disclaimer lang="ja_JP">一部の国では、このアドオンが不法でありますので、設置する前に必ず関連法律を確認してください</disclaimer>
+      <summary lang="ko_KR">Netflix</summary>
+      <description lang="ko_KR">Netflix VOD 서비스애드온</description>
+      <disclaimer lang="ko_KR">일부 국가에서는 이 애드온의 일부가 불법일 수도 있으니, 설치하기전 관련 법을 확인하기 바랍니다.</disclaimer>
+      <description lang="it_IT">Netflix Add-on servizi VOD</description>
+      <disclaimer lang="it_IT">Alcune parti di questo add-on potrebbero non essere legali nel proprio paese di residenza - si prega di verificare le leggi locali prima dell'installazione.</disclaimer>
+      <summary lang="es_ES">Netflix</summary>
+      <description lang="es_ES">Complemento para los Servicios VOD de Netflix</description>
+      <disclaimer lang="es_ES">Algunas partes de este complemento pueden no ser legales en su país de residencia - Por favor, consulte con las leyes locales antes de instalar.</disclaimer>
+      <summary lang="hu_HU">Netflix</summary>
+      <description lang="hu_HU">Netflix VOD kiegészítő a Kodihoz</description>
+      <disclaimer lang="hu_HU">Előfordulhat, hogy a kiegészítő néhány része nem törvényes az Ön országában - telepítés előtt tájékozódjon a helyi törvényekről.</disclaimer>
+      <summary lang="tr_TR">Netflix</summary>
+      <description lang="tr_TR">Netflix VOD Hizmetleri Eklentisi</description>
+      <disclaimer lang="tr_TR">Bu eklentinin bazı bölümleri ikamet ettiğiniz ülkede yasal olmayabilir - lütfen yüklemeden önce yerel yasalarınıza bakın.</disclaimer>
+      <summary lang="ro_RO">Netflix</summary>
+      <description lang="ro_RO">Add-on pentru servicii video la cerere Netflix</description>
+      <disclaimer lang="ro_RO">Unele porțiuni ale acestui add-on ar putea fi ilegale în țara în care locuiți - vă rugăm să verificați legile locale înainte de instalare.</disclaimer>
+      <summary lang="sv_SE">Netflix</summary>
+      <description lang="sv_SE">Netflix VOD Service-tillägg</description>
+      <disclaimer lang="sv_SE">Vissa delar av detta tillägg kanske inte är lagligt i ditt hemland - kontrollera med dina lokala lagar innan du installerar.</disclaimer>
+      <assets>
+        <icon>resources/media/icon.png</icon>
+        <fanart>resources/media/fanart.jpg</fanart>
+        <screenshot>resources/media/screenshot-01.jpg</screenshot>
+        <screenshot>resources/media/screenshot-02.jpg</screenshot>
+        <screenshot>resources/media/screenshot-03.jpg</screenshot>
+        <screenshot>resources/media/screenshot-04.jpg</screenshot>
+        <screenshot>resources/media/screenshot-05.jpg</screenshot>
+      </assets>
+      <language>en cs de es hr hu it ja ko nl pl pt ro sv tr</language>
+      <platform>all</platform>
+      <license>MIT</license>
+      <website>https://www.netflix.com</website>
+      <email></email>
+      <forum>https://forum.kodi.tv/showthread.php?tid=329767</forum>
+      <source>https://github.com/CastagnaIT/plugin.video.netflix</source>
+      <news>
+  v1.5.0 (2020-06-21)
+  -Add support to the new LoCo Netflix pages
+  -Fixed KeyError 'lolomo' (LoLoMo seem now deprecated)
+  -Fixed incorrect user/password issue when spaces are inserted unintentionally to credentials
+  -New attempt to fix http error 401
+  -Updated translations fr
+  -Minor changes/fixes
+      </news>
+    </extension>
+  </addon>
+
   <addon id="plugin.video.netflix" name="Netflix" version="1.4.1" provider-name="libdev + jojo + asciidisco + caphm + castagnait">
     <requires>
       <import addon="xbmc.python" version="2.26.0"/>
@@ -170,88 +252,6 @@
   -Fixed unicodedecode error with Kodi 18 and MSL errors
   -Updated translations de, es, hu, ro, sv-se, tr, pl
   -Other minor fixes
-      </news>
-    </extension>
-  </addon>
-
-  <addon id="plugin.video.netflix" name="Netflix" version="1.3.2" provider-name="libdev + jojo + asciidisco + caphm + castagnait">
-    <requires>
-      <import addon="xbmc.python" version="2.26.0"/>
-      <import addon="script.module.addon.signals" version="0.0.3"/>
-      <import addon="script.module.future" version="0.17.1"/>
-      <import addon="script.module.inputstreamhelper" version="0.3.3"/>
-      <import addon="script.module.pycryptodome" version="3.4.3"/>
-      <import addon="script.module.requests" version="2.12.4"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
-      <provides>video</provides>
-    </extension>
-    <extension point="xbmc.service" library="service.py"/>
-    <extension point="xbmc.python.module" library="modules/mysql-connector-python"/>
-    <extension point="xbmc.addon.metadata">
-      <reuselanguageinvoker>true</reuselanguageinvoker>
-      <summary lang="cs_CZ">Netflix</summary>
-      <description lang="cs_CZ">Plugin pro sledování filmů, seriálů online z Netflixu</description>
-      <disclaimer lang="cs_CZ">Některé části tohoto doplňku nemusí být ve vaší zemi pobytu legální - před instalací dbejte na vaše zákony.</disclaimer>
-      <summary lang="de_DE">Netflix</summary>
-      <description lang="de_DE">Addon für Netflix VOD Services</description>
-      <disclaimer lang="de_DE">Möglicherweise sind einge Teile dieses Addons in Ihrem Land illegal, Sie sollten dies unbedingt vor der Installation überprüfen.</disclaimer>
-      <summary lang="en_GB">Netflix</summary>
-      <description lang="en_GB">Netflix VOD Services Add-on</description>
-      <disclaimer lang="en_GB">Some parts of this add-on may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-      <summary lang="el_GR">Νέτφλιξ</summary>
-      <description lang="el_GR">Πρόσθετο υπηρεσιών κατά παραγγελία του Νέτφλιξ</description>
-      <disclaimer lang="el_GR">Ορισμένα μέρη αυτού του προσθέτου μπορεί να μην είναι νόμιμα στην χώρα που κατοικείτε - παρακαλώ ελέγξτε τους τοπικούς νόμους πριν την εγκατάσταση.</disclaimer>
-      <summary lang="nl_NL">Netflix</summary>
-      <description lang="nl_NL">Bekijk Netflix films en tvprogramma's in Kodi.</description>
-      <disclaimer lang="nl_NL">Sommige delen van deze add-on zijn mogelijk onwettig in jouw land - raadpleeg de lokale wetgeving alvorens deze add-on te installeren.</disclaimer>
-      <summary lang="ja_JP">Netflix</summary>
-      <description lang="ja_JP">Netflix VOD サービスアドオン</description>
-      <disclaimer lang="ja_JP">一部の国では、このアドオンが不法でありますので、設置する前に必ず関連法律を確認してください</disclaimer>
-      <summary lang="ko_KR">Netflix</summary>
-      <description lang="ko_KR">Netflix VOD 서비스애드온</description>
-      <disclaimer lang="ko_KR">일부 국가에서는 이 애드온의 일부가 불법일 수도 있으니, 설치하기전 관련 법을 확인하기 바랍니다.</disclaimer>
-      <description lang="it_IT">Netflix Add-on servizi VOD</description>
-      <disclaimer lang="it_IT">Alcune parti di questo add-on potrebbero non essere legali nel proprio paese di residenza - si prega di verificare le leggi locali prima dell'installazione.</disclaimer>
-      <summary lang="es_ES">Netflix</summary>
-      <description lang="es_ES">Complemento para los Servicios VOD de Netflix</description>
-      <disclaimer lang="es_ES">Algunas partes de este complemento pueden no ser legales en su país de residencia - Por favor, consulte con las leyes locales antes de instalar.</disclaimer>
-      <summary lang="hu_HU">Netflix</summary>
-      <description lang="hu_HU">Netflix VOD kiegészítő a Kodihoz</description>
-      <disclaimer lang="hu_HU">Előfordulhat, hogy a kiegészítő néhány része nem törvényes az Ön országában - telepítés előtt tájékozódjon a helyi törvényekről.</disclaimer>
-      <summary lang="tr_TR">Netflix</summary>
-      <description lang="tr_TR">Netflix VOD Hizmetleri Eklentisi</description>
-      <disclaimer lang="tr_TR">Bu eklentinin bazı bölümleri ikamet ettiğiniz ülkede yasal olmayabilir - lütfen yüklemeden önce yerel yasalarınıza bakın.</disclaimer>
-      <summary lang="ro_RO">Netflix</summary>
-      <description lang="ro_RO">Add-on pentru servicii video la cerere Netflix</description>
-      <disclaimer lang="ro_RO">Unele porțiuni ale acestui add-on ar putea fi ilegale în țara în care locuiți - vă rugăm să verificați legile locale înainte de instalare.</disclaimer>
-      <summary lang="sv_SE">Netflix</summary>
-      <description lang="sv_SE">Netflix VOD Service-tillägg</description>
-      <disclaimer lang="sv_SE">Vissa delar av detta tillägg kanske inte är lagligt i ditt hemland - kontrollera med dina lokala lagar innan du installerar.</disclaimer>
-      <assets>
-        <icon>resources/media/icon.png</icon>
-        <fanart>resources/media/fanart.jpg</fanart>
-        <screenshot>resources/media/screenshot-01.jpg</screenshot>
-        <screenshot>resources/media/screenshot-02.jpg</screenshot>
-        <screenshot>resources/media/screenshot-03.jpg</screenshot>
-        <screenshot>resources/media/screenshot-04.jpg</screenshot>
-        <screenshot>resources/media/screenshot-05.jpg</screenshot>
-      </assets>
-      <language>en cs de es hr hu it ja ko nl pl pt ro sv tr</language>
-      <platform>all</platform>
-      <license>MIT</license>
-      <website>https://www.netflix.com</website>
-      <email></email>
-      <forum>https://forum.kodi.tv/showthread.php?tid=329767</forum>
-      <source>https://github.com/CastagnaIT/plugin.video.netflix</source>
-      <news>
-  v1.3.2 (2020-05-20)
-  -Fixed some issues on chinese systems
-  -Fixed errors on loading lists
-  -Fixed missing plot in some skins
-  -Fixed ESN generation (lower case issue)
-  -Fixed UpNext regressions
-  -Updated translations es, sv-se
       </news>
     </extension>
   </addon>
