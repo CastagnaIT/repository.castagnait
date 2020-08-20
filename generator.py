@@ -181,6 +181,7 @@ class GeneratorZIP:
     def get_dir_items(self, path):
         """Get filtered items of a folder"""
         included_files = ['.md5', 'README.md', '.xml', '.zip']
+        excluded_dirs = ['resources']
         if not path:
             path = os.getcwd()
         dir_list = sorted(os.listdir(path))
@@ -189,7 +190,7 @@ class GeneratorZIP:
             if item.startswith('.'):
                 continue
             is_dir = os.path.isdir(os.path.join(path, item))
-            if is_dir:
+            if is_dir and item not in excluded_dirs:
                 folder_items += [item]
             elif any(item.find(included_file) != -1 for included_file in included_files):
                 folder_items += [item]
