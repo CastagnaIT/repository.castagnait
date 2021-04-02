@@ -33,7 +33,7 @@ GENERATE_ONLY_ADDONS = ['plugin.video.netflix']
 # > Files and folders to be excluded per add-on, warning: does not take into account absolute paths of sub-folders
 ZIP_EXCLUDED_FILES = {'plugin.video.netflix': ['tox.ini', 'changelog.txt', 'codecov.yml', 'Code_of_Conduct.md',
                                                'Contributing.md', 'Makefile', 'requirements.txt', 'README.md']}
-ZIP_EXCLUDED_DIRS = {'plugin.video.netflix': ['tests', 'docs', '__pycache__', 'LICENSES']}
+ZIP_EXCLUDED_DIRS = {'plugin.video.netflix': ['tests', 'docs', '__pycache__', 'LICENSES', 'venv']}
 
 ZIP_FOLDER = 'zip'  # Folder that contains all generated add-ons zips
 
