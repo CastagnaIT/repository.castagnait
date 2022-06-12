@@ -8,16 +8,20 @@
     SPDX-License-Identifier: GPL-2.0-only
     See LICENSE.txt for more information.
 """
-# Compatible only with Python 3
-# Based on code by j48antialias:
-# https://anarchintosh-projects.googlecode.com/files/addons_xml_generator.py
 
 import os
 import re
+import sys
 from zipfile import ZipFile, ZIP_DEFLATED
 from mako.template import Template  # How install: python -m pip install mako
 
 PYTHON_COMPILED_EXT = ['.pyc', '.pyo', '.pyd']
+
+# --- HOW TO RUN GENERATOR ---
+# This generator is done to make a repository to works with more kodi versions
+# To distinguish them, each addon version must be placed in a kodi folder
+# specified as parameter, as follows:
+# python3 generator.py [kodi folder name]
 
 # --- GENERATOR CONFIGURATION ---
 # > ADDONS_ABSOLUTE_PATH:
@@ -34,8 +38,6 @@ GENERATE_ONLY_ADDONS = ['plugin.video.netflix']
 ZIP_EXCLUDED_FILES = {'plugin.video.netflix': ['tox.ini', 'changelog.txt', 'codecov.yml', 'Code_of_Conduct.md',
                                                'Contributing.md', 'Makefile', 'requirements.txt', 'README.md']}
 ZIP_EXCLUDED_DIRS = {'plugin.video.netflix': ['tests', 'docs', '__pycache__', 'LICENSES', 'venv']}
-
-ZIP_FOLDER = 'zip'  # Folder that contains all generated add-ons zips
 
 
 def get_addons_main_path():
@@ -72,17 +74,19 @@ class GeneratorXML:
         and a new addons.xml.md5 hash file. Must be run from the root of
         the checked-out repo. Only handles single depth folder structure.
     """
+    zip_folder = None
 
-    def __init__(self, num_of_previous_ver=0):
+    def __init__(self, zip_folder_name, num_of_previous_ver=0):
         """
         num_of_previous_ver: include the possibility to the users to rollback to previous version with Kodi interface,
         """
+        self.zip_folder = zip_folder_name
         self.generate_addons_file(num_of_previous_ver)
         self.generate_md5_file()
         print("### Finished updating addons xml and md5 files ###")
 
     def generate_addons_file(self, num_of_previous_ver=0):
-        safe_excluded_folders = [ZIP_FOLDER, 'temp', 'packages']
+        safe_excluded_folders = [self.zip_folder, 'temp', 'packages']
 
         # Initial XML directive
         addons_xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<addons>\n'
@@ -107,9 +111,9 @@ class GeneratorXML:
                     current_addon_version = re.findall(r'version=\"(.*?[0-9])\"', addon_xml)[1]
                     # It is mandatory to check if a zip of the current version has already been generated before
                     zip_filename = generate_zip_filename(addon_folder_name, current_addon_version)
-                    if os.path.exists(os.path.join(ZIP_FOLDER, addon_folder_name, zip_filename)):
-                        os.remove(os.path.join(ZIP_FOLDER, addon_folder_name, zip_filename))
-                    prev_xmls_ver = GeneratorZIP().get_previous_addon_xml_ver(addon_folder_name, num_of_previous_ver)
+                    if os.path.exists(os.path.join(self.zip_folder, addon_folder_name, zip_filename)):
+                        os.remove(os.path.join(self.zip_folder, addon_folder_name, zip_filename))
+                    prev_xmls_ver = GeneratorZIP(self.zip_folder).get_previous_addon_xml_ver(addon_folder_name, num_of_previous_ver)
                     for prev_xml in prev_xmls_ver:
                         addons_xml += self._format_xml_lines(prev_xml.splitlines())
 
@@ -138,7 +142,7 @@ class GeneratorXML:
     def generate_md5_file(self):
         """Create a new md5 hash"""
         import hashlib
-        hexdigest = hashlib.md5(open('addons.xml', 'r', encoding='utf-8').read().encode('utf-8')).hexdigest()
+        hexdigest = hashlib.md5(open(os.path.join(self.zip_folder, 'addons.xml'), 'r', encoding='utf-8').read().encode('utf-8')).hexdigest()
 
         try:
             self._save_file(hexdigest.encode('utf-8'), file='addons.xml.md5')
@@ -148,7 +152,7 @@ class GeneratorXML:
     def _save_file(self, data, file):
         """Write data to the file"""
         try:
-            open(file, "wb").write(data)
+            open(os.path.join(self.zip_folder, file), "wb").write(data)
         except Exception as exc:
             print('An error occurred saving {} file!\n{}'.format(file, exc))
 
@@ -156,13 +160,15 @@ class GeneratorXML:
 class GeneratorZIP:
     """Generate add-ons ZIP Files"""
 
-    def __init__(self):
-        pass
+    zip_folder = None
+
+    def __init__(self, zip_folder_name):
+        self.zip_folder = zip_folder_name
 
     index_template = """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
   <head>
-     <title>Index of</title>
+     <title>Index of ${header}</title>
   </head>
   <body>
     <h1>${header}</h1>
@@ -220,13 +226,13 @@ class GeneratorZIP:
         addon_xmls = []
         index = 0
         from functools import cmp_to_key
-        folder_items = sorted(os.listdir(os.path.join(ZIP_FOLDER, addon_folder_name)),
+        folder_items = sorted(os.listdir(os.path.join(self.zip_folder, addon_folder_name)),
                               key=cmp_to_key(self._file_compare_version), reverse=True)
         for item in folder_items:
             if index == num_of_previous_ver:
                 break
             if item.endswith('.zip'):
-                with ZipFile(os.path.join(ZIP_FOLDER, addon_folder_name, item), mode='r') as zip_obj:
+                with ZipFile(os.path.join(self.zip_folder, addon_folder_name, item), mode='r') as zip_obj:
                     addon_xmls += [zip_obj.read(addon_folder_name + '/addon.xml').decode('utf-8')]
                 index += 1
         print('Added to addons.xml also {} of previous {} add-on version'.format(index, addon_folder_name))
@@ -240,8 +246,8 @@ class GeneratorZIP:
         return Template(self.index_template).render(names=items_name, header=header)
 
     def generate_zip_files(self, generate_html_indexes=False, delete_py_compiled_files=False):
-        if not os.path.exists(ZIP_FOLDER):
-            os.makedirs(ZIP_FOLDER)
+        if not os.path.exists(self.zip_folder):
+            os.makedirs(self.zip_folder)
         for addon in get_addons_folders():
             try:
                 addon_folder_name = os.path.basename(addon)
@@ -251,7 +257,7 @@ class GeneratorZIP:
                 addon_version = re.findall(r'version=\"(.*?[0-9])\"', xml)[1]
 
                 # Create add-on zip folder
-                addon_zip_folder = os.path.join(ZIP_FOLDER, addon_folder_name)
+                addon_zip_folder = os.path.join(self.zip_folder, addon_folder_name)
                 if not os.path.exists(addon_zip_folder):
                     os.makedirs(addon_zip_folder)
 
@@ -308,12 +314,17 @@ class GeneratorZIP:
         if generate_html_indexes:
             with open('index.html', 'w', encoding='utf-8') as file:
                 file.write(self.generate_html_index(None))
-            with open(os.path.join(ZIP_FOLDER, 'index.html'), 'w', encoding='utf-8') as file:
-                file.write(self.generate_html_index(ZIP_FOLDER))
+            with open(os.path.join(self.zip_folder, 'index.html'), 'w', encoding='utf-8') as file:
+                file.write(self.generate_html_index(self.zip_folder))
 
 
 if __name__ == "__main__":
-    print("Trying to generate addons.xml and addons.md5")
-    GeneratorXML(num_of_previous_ver=2)
-    print("\r\nTrying to generate zip for each add-on")
-    GeneratorZIP().generate_zip_files(generate_html_indexes=True, delete_py_compiled_files=False)
+    if len(sys.argv) <= 1:
+        print("ERROR: Kodi folder name argument not specified.")
+    else:
+        # Folder that contains all sub-folders for generated add-ons zips
+        zip_folder = sys.argv[1]
+        print("Trying to generate addons.xml and addons.md5")
+        GeneratorXML(zip_folder, num_of_previous_ver=2)
+        print("\r\nTrying to generate zip for each add-on")
+        GeneratorZIP(zip_folder).generate_zip_files(generate_html_indexes=True, delete_py_compiled_files=False)
