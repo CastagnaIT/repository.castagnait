@@ -1,15 +1,8 @@
 # CastagnaIT Repository for Kodi 18.x (LEIA) add-ons
 
-[Repository installation file [repository.castagnait-1.0.1.zip]](https://github.com/castagnait/repository.castagnait/raw/master/repository.castagnait-1.0.1.zip)
+***The repository has been deprecated, no future updates will be published on this old repository!***
 
-Installation instructions are in the Wiki contained in the add-on repository.
+New repository branch: https://github.com/CastagnaIT/repository.castagnait/tree/kodi
 
----
-
-## Content of the repository
-
-- plugin.video.netflix
-
-Updates published through this channel are only release versions, not daily builds.
-
-For any other download links refer to the Readme in the add-on repository
+If you have already installed the old repository, you can update it with:
+[New repository installation file [repository.castagnait-2.0.0.zip]](https://github.com/castagnait/repository.castagnait/raw/kodi/repository.castagnait-2.0.0.zip)
