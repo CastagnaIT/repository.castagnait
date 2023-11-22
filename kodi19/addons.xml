@@ -290,4 +290,23 @@
       </news>
     </extension>
   </addon>
+
+  <addon id="repository.castagnait" name="CastagnaIT Repository" version="2.0.1" provider-name="castagnait">
+  	<extension point="xbmc.addon.repository" name="CastagnaIT Repository">
+  		<dir minversion="19.0.0">
+  			<info compressed="false">https://github.com/CastagnaIT/repository.castagnait/raw/kodi/kodi19/addons.xml</info>
+  			<checksum>https://github.com/CastagnaIT/repository.castagnait/raw/kodi/kodi19/addons.xml.md5</checksum>
+  			<datadir zip="true">https://github.com/CastagnaIT/repository.castagnait/raw/kodi/kodi19</datadir>
+  			<hashes>false</hashes>
+  		</dir>
+  	</extension>
+  	<extension point="xbmc.addon.metadata">
+  		<summary>CastagnaIT Repository</summary>
+  		<description>Castagna IT repository</description>
+  		<platform>all</platform>
+  		<assets>
+  			<icon>icon.jpg</icon>
+  		</assets>
+  	</extension>
+  </addon>
 </addons>

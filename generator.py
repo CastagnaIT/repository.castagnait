@@ -32,7 +32,7 @@ ADDONS_ABSOLUTE_PATH = 'D:\\GIT'
 # > GENERATE_ONLY_ADDONS:
 # - If 'None': all add-ons contained in the path will be taken into account
 # - If specified: only the mentioned add-ons folders will be taken into account
-GENERATE_ONLY_ADDONS = ['plugin.video.netflix']
+GENERATE_ONLY_ADDONS = ['plugin.video.netflix', 'repository.castagnait']
 
 # > Files and folders to be excluded per add-on, warning: does not take into account absolute paths of sub-folders
 ZIP_EXCLUDED_FILES = {'plugin.video.netflix': ['tox.ini', 'changelog.txt', 'codecov.yml', 'Code_of_Conduct.md',
@@ -57,7 +57,10 @@ def get_addons_folders():
         if GENERATE_ONLY_ADDONS and item not in GENERATE_ONLY_ADDONS:
             continue
         # Add only if addon.xml exists
-        addon_xml_path = os.path.join(full_path, 'addon.xml')
+        if 'repository' in full_path:
+            addon_xml_path = os.path.join(full_path, item, 'addon.xml')
+        else:
+            addon_xml_path = os.path.join(full_path, 'addon.xml')
         if os.path.exists(addon_xml_path):
             addons_list += [full_path]
     return addons_list
@@ -96,33 +99,49 @@ class GeneratorXML:
             # Skip the safe excluded folders
             if addon in safe_excluded_folders:
                 continue
+            if 'repository' in addon:
+                addon_folder_name = os.path.basename(addon)
+                # the repo files are contained in a separate folder of same name
+                # to avoid duplicate same files for each kodi version
+                addon_xml_path = os.path.join(addon, addon_folder_name, 'addon.xml')
+                try:
+                    # Get xml content and split lines for stripping
+                    addon_xml = open(addon_xml_path, 'r', encoding='utf-8').read()
+                    # Add the addons.xml text to the main xml
+                    addons_xml += self._format_xml_lines(addon_xml.splitlines())
+                    print(addon_xml_path + ' Success!')
+                except Exception as exc:
+                    # missing or poorly formatted addon.xml
+                    print(addon_xml_path + ' Fail!')
+                    print('Exception: {}'.format(exc))
+                    continue
+            else:
+                addon_folder_name = os.path.basename(addon)
+                addon_xml_path = os.path.join(addon, 'addon.xml')
 
-            addon_folder_name = os.path.basename(addon)
-            addon_xml_path = os.path.join(addon, 'addon.xml')
+                try:
+                    # Get xml content and split lines for stripping
+                    addon_xml = open(addon_xml_path, 'r', encoding='utf-8').read()
+                    # Add the addons.xml text to the main xml
+                    addons_xml += self._format_xml_lines(addon_xml.splitlines())
 
-            try:
-                # Get xml content and split lines for stripping
-                addon_xml = open(addon_xml_path, 'r', encoding='utf-8').read()
-                # Add the addons.xml text to the main xml
-                addons_xml += self._format_xml_lines(addon_xml.splitlines())
+                    if num_of_previous_ver:
+                        # Read current add-on version
+                        current_addon_version = re.findall(r'version=\"(.*?[0-9])\"', addon_xml)[1]
+                        # It is mandatory to check if a zip of the current version has already been generated before
+                        zip_filename = generate_zip_filename(addon_folder_name, current_addon_version)
+                        if os.path.exists(os.path.join(self.zip_folder, addon_folder_name, zip_filename)):
+                            os.remove(os.path.join(self.zip_folder, addon_folder_name, zip_filename))
+                        prev_xmls_ver = GeneratorZIP(self.zip_folder).get_previous_addon_xml_ver(addon_folder_name, num_of_previous_ver)
+                        for prev_xml in prev_xmls_ver:
+                            addons_xml += self._format_xml_lines(prev_xml.splitlines())
 
-                if num_of_previous_ver:
-                    # Read current add-on version
-                    current_addon_version = re.findall(r'version=\"(.*?[0-9])\"', addon_xml)[1]
-                    # It is mandatory to check if a zip of the current version has already been generated before
-                    zip_filename = generate_zip_filename(addon_folder_name, current_addon_version)
-                    if os.path.exists(os.path.join(self.zip_folder, addon_folder_name, zip_filename)):
-                        os.remove(os.path.join(self.zip_folder, addon_folder_name, zip_filename))
-                    prev_xmls_ver = GeneratorZIP(self.zip_folder).get_previous_addon_xml_ver(addon_folder_name, num_of_previous_ver)
-                    for prev_xml in prev_xmls_ver:
-                        addons_xml += self._format_xml_lines(prev_xml.splitlines())
-
-                print(addon_xml_path + ' Success!')
-            except Exception as exc:
-                # missing or poorly formatted addon.xml
-                print(addon_xml_path + ' Fail!')
-                print('Exception: {}'.format(exc))
-                continue
+                    print(addon_xml_path + ' Success!')
+                except Exception as exc:
+                    # missing or poorly formatted addon.xml
+                    print(addon_xml_path + ' Fail!')
+                    print('Exception: {}'.format(exc))
+                    continue
         # Add closing tag
         addons_xml = addons_xml.strip() + '\n</addons>\n'
         # Save the main XML file
@@ -249,6 +268,8 @@ class GeneratorZIP:
         if not os.path.exists(self.zip_folder):
             os.makedirs(self.zip_folder)
         for addon in get_addons_folders():
+            if 'repository' in addon:
+                continue
             try:
                 addon_folder_name = os.path.basename(addon)
                 addon_xml_path = os.path.join(addon, 'addon.xml')
