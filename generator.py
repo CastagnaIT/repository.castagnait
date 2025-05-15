@@ -27,7 +27,7 @@ PYTHON_COMPILED_EXT = ['.pyc', '.pyo', '.pyd']
 # > ADDONS_ABSOLUTE_PATH:
 # - If 'None': all add-ons contained in 'packages' sub-folder (where there is generator.py) will be taken into account
 # - If specified: all add-ons within that path will be taken into account
-ADDONS_ABSOLUTE_PATH = 'D:\\GIT'
+ADDONS_ABSOLUTE_PATH = 'E:\\Dev\\GIT'
 
 # > GENERATE_ONLY_ADDONS:
 # - If 'None': all add-ons contained in the path will be taken into account
