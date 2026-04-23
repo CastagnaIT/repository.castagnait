@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.agaton" name="Agaton Repository" version="1.0.0" provider-name="agaton">
+	<extension point="xbmc.addon.repository" name="Agaton Repository">
+		<dir minversion="19.0.0">
+			<info compressed="false">https://github.com/Agaton/repository.agayon/raw/kodi/kodi19/addons.xml</info>
+			<checksum>https://github.com/Agaton/repository.agaton/raw/kodi/kodi19/addons.xml.md5</checksum>
+			<datadir zip="true">https://github.com/Agaton/repository.agaton/raw/kodi/kodi19</datadir>
+			<hashes>false</hashes>
+		</dir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Agaton Repository</summary>
+		<description>Agaton repository</description>
+		<platform>all</platform>
+		<assets>
+			<icon>icon.jpg</icon>
+		</assets>
+	</extension>
+</addon>
